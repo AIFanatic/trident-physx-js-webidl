@@ -1,0 +1,4 @@
+.DS_Store
+node_modules
+PhysX-Lib/PhysX/physx/bin/emscripten
+PhysX-Lib/PhysX/physx/compiler/emscripten-*

@@ -1,0 +1,35 @@
+{
+  "name": "trident-physx-js-webidl",
+  "version": "0.4.11",
+  "description": "emscripten/WebIDL javascript bindings for Nvidia PhysX",
+  "author": "AIFanatic",
+  "main": "./dist/trident-physx-js-webidl.wasm.js",
+  "types": "./dist/trident-physx-js-webidl.wasm.d.ts",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/AIFanatic/trident-physx-js-webidl.git"
+  },
+  "bugs": {
+    "url": "https://github.com/AIFanatic/trident-physx-js-webidl/issues"
+  },
+  "homepage": "https://github.com/AIFanatic/trident-physx-js-webidl#readme",
+  "keywords": [
+    "physics",
+    "emscripten",
+    "WebIDL",
+    "webassembly",
+    "PhysX"
+  ],
+  "license": "MIT License",
+  "files": [
+    "./dist/*",
+    "package.json",
+    "LICENSE",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "cd ./PhysX-Lib/ && ./make-dist.sh && cd .. && npm run build:types",
+    "build:types": "npx -p jsdom -p milkshake-inc/webidl2ts -c 'webidl2ts -e -d -n PhysX -i PhysX-Lib/PhysX/physx/source/physxwebbindings/src/PhysXJs.idl -o dist/trident-physx-js-webidl.wasm.d.ts'"
+  },
+  "devDependencies": {}
+}
