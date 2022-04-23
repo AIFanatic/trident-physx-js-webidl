@@ -22,7 +22,7 @@
   ],
   "license": "MIT License",
   "files": [
-    "./dist/*",
+    "dist",
     "package.json",
     "LICENSE",
     "README.md"
