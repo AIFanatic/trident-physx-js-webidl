@@ -2,6 +2,7 @@
 
 CURRENT_PATH=$PWD
 DIST_PATH=$CURRENT_PATH/../dist
+SRC_PATH=$CURRENT_PATH/../src
 
 cd $CURRENT_PATH/PhysX/physx/compiler/emscripten-debug/
 

@@ -1,10 +1,10 @@
 {
   "name": "trident-physx-js-webidl",
-  "version": "0.4.11",
+  "version": "0.4.12",
   "description": "emscripten/WebIDL javascript bindings for Nvidia PhysX",
   "author": "AIFanatic",
-  "main": "./dist/trident-physx-js-webidl.wasm.js",
-  "types": "./dist/trident-physx-js-webidl.wasm.d.ts",
+  "main": "./dist/trident-physx-js-webidl.js",
+  "types": "./dist/trident-physx-js-webidl.d.ts",
   "repository": {
     "type": "git",
     "url": "https://github.com/AIFanatic/trident-physx-js-webidl.git"
@@ -28,8 +28,15 @@
     "README.md"
   ],
   "scripts": {
-    "build": "cd ./PhysX-Lib/ && ./make-dist.sh && cd .. && npm run build:types",
-    "build:types": "npx -p jsdom -p milkshake-inc/webidl2ts -c 'webidl2ts -e -d -n PhysX -i PhysX-Lib/PhysX/physx/source/physxwebbindings/src/PhysXJs.idl -o dist/trident-physx-js-webidl.wasm.d.ts'"
+    "build": "cd ./PhysX-Lib/ && ./make-dist.sh && cd .. && npm run build:esm && npm run build:types",
+    "build:esm": "esbuild src/PhysX.ts --bundle --outfile=dist/trident-physx-js-webidl.js --target=esnext --format=esm",
+    "build:types": "npm run build:physxmoduletypes && npm run build:physxtypes && cat ./src/trident-physx-js-webidl.wasm2.d.ts ./src/trident-physx-js-webidl.d.ts > ./dist/trident-physx-js-webidl.d.ts",
+    "build:physxmoduletypes": "npx -p jsdom -p milkshake-inc/webidl2ts -c 'webidl2ts -e -d -n PhysXModule -i PhysX-Lib/PhysX/physx/source/physxwebbindings/src/PhysXJs.idl -o src/trident-physx-js-webidl.wasm.d.ts'",
+    "build:physxtypes": "npx -p jsdom -p milkshake-inc/webidl2ts -c 'webidl2ts -e -n PhysX -i PhysX-Lib/PhysX/physx/source/physxwebbindings/src/PhysXJs.idl -o src/trident-physx-js-webidl.wasm2.d.ts'"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "esbuild": "^0.14.38",
+    "typescript": "^4.6.3"
+  },
+  "dependencies": {}
 }
