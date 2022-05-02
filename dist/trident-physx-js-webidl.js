@@ -33693,6 +33693,20 @@ var trident_physx_js_webidl_wasm_default = PhysXModule;
 
 // src/PhysX.ts
 var PhysX = trident_physx_js_webidl_wasm_default;
+function FixEnums(PhysX2) {
+  const enums = Object.keys(PhysX2).filter((key) => {
+    return key.includes("_emscripten_enum_");
+  }).map((enumString) => {
+    const split = enumString.split("_emscripten_enum_")[1].split("();")[0].split("_e");
+    return { enumName: split[0], entryName: split[1], emscript: enumString };
+  });
+  for (const enumEntry of enums) {
+    if (!PhysX2[enumEntry.enumName]) {
+      PhysX2[enumEntry.enumName] = {};
+    }
+    PhysX2[enumEntry.enumName][enumEntry.entryName] = PhysX2[enumEntry.emscript]();
+  }
+}
 function PhysXLoader(wasmLocation) {
   return new Promise((resolve, reject) => {
     fetch(wasmLocation).then((response) => {
@@ -33702,6 +33716,7 @@ function PhysXLoader(wasmLocation) {
         };
         trident_physx_js_webidl_wasm_default(PhysXModuleClone).then((instance) => {
           PhysX = instance;
+          FixEnums(PhysX);
           resolve(PhysX);
         }).catch((error) => {
           reject(error);

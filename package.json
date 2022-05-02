@@ -1,6 +1,6 @@
 {
   "name": "trident-physx-js-webidl",
-  "version": "0.4.12",
+  "version": "0.4.13",
   "description": "emscripten/WebIDL javascript bindings for Nvidia PhysX",
   "author": "AIFanatic",
   "main": "./dist/trident-physx-js-webidl.js",
